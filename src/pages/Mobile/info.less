@@ -1,0 +1,25 @@
+.main {
+  width: 96%;
+  display: flex;
+  margin: 0 auto;
+  padding: 0 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+  div {
+    width: 100%;
+    .img-box {
+      min-width: 80% !important; /* 图片的最大宽度为父容器的100% */
+      width: 80% !important; /* 让宽度自适应 */
+      height: auto !important;
+      min-height: auto !important;
+    }
+    p {
+      width: 100%;
+    }
+    img {
+      max-width: 100%; /* 图片的最大宽度为父容器的100% */
+      width: 100% !important; /* 让宽度自适应 */
+      height: auto !important;
+    }
+  }
+}
