@@ -1,13 +1,13 @@
 import request from '../index';
 
-const baseUrl = 'http://43.133.8.208:8000'
+const baseUrl = 'https://anime.weilaiyw.com'
 /**
  * @description 列表
  * @param 请求参数类型
  */
 export const getList = () => {
   return request(
-    `${baseUrl}/list_ct`,
+    `${baseUrl}/cartoon/list`,
     {
       method: 'get',
     }

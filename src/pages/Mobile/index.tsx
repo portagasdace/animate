@@ -87,13 +87,13 @@ const Mobile = () => {
             <img src={nodesInfo(item.content).img || ''} alt="" />
             <div className="item-title" onClick={() => {
               // 跳转到指定路由
-              history.push(`/mobileInfo/id=${item.id}`);
+              history.push(`/mobileInfo/${item.id}`);
             }}>{item.title}</div>
             <div className="item-date">時間：{item.create_time}</div>
             <div className="item-decs">{`${nodesInfo(item.content).decs}...` || ''}</div>
             <span className="item-continue" onClick={() => {
               // 跳转到指定路由
-              history.push(`/mobileInfo/id=${item.id}`);
+              history.push(`/mobileInfo/${item.id}`);
             }}>Continue Reading</span>
           </div>
         })
