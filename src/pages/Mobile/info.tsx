@@ -52,9 +52,14 @@ const Info = () => {
     }
   }, [dataList])
 
-  return dataList.length > 0 && <div className='main' dangerouslySetInnerHTML={{ __html: dataList[0].content }}>
+  return dataList.length > 0 &&
+    <div>
+      <div className="info-title">{dataList[0].title}</div>
+      <div className="info-time">{dataList[0].create_time}</div>
+      <div className='main' dangerouslySetInnerHTML={{ __html: dataList[0].content }}>
+      </div>
+    </div>
 
-  </div>
 }
 
 export default Info

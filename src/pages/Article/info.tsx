@@ -1,6 +1,7 @@
 import { getList } from '@/api/home';
 import { useEffect, useState } from 'react';
 import { history, useLocation } from 'umi';
+import "./index.scss"
 const Info = (props: any) => {
   const {
     location: { pathname }
@@ -47,8 +48,11 @@ const Info = (props: any) => {
     }
   }, [dataList])
 
-  return dataList.length > 0 && <div dangerouslySetInnerHTML={{ __html: dataList[0].content }}>
-
+  return dataList.length > 0 && <div>
+    <div className="info-title">{dataList[0].title}</div>
+    <div className="info-time">{dataList[0].create_time}</div>
+    <div dangerouslySetInnerHTML={{ __html: dataList[0].content }}>
+    </div>
   </div>
 }
 export default Info
