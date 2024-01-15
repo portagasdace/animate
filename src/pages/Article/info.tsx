@@ -27,7 +27,6 @@ const Info = (props: any) => {
   }, [])
 
   useEffect(() => {
-    console.log(id, 'lllll')
   }, [history])
 
   useEffect(() => {
@@ -47,12 +46,11 @@ const Info = (props: any) => {
       }, 0)
     }
   }, [dataList])
-
   return dataList.length > 0 && <div>
     <div className="info-title">{dataList[0].title}</div>
     <div className="info-time">{dataList[0].create_time}</div>
-    <div dangerouslySetInnerHTML={{ __html: dataList[0].content }}>
+    <div dangerouslySetInnerHTML={{ __html: dataList[0].meta ? `${dataList[0].meta}${dataList[0].content}` : dataList[0].content }} >
     </div>
-  </div>
+  </div >
 }
 export default Info

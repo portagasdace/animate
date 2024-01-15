@@ -41,6 +41,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getHomeList()
+    
   }, [])
   return (
     <div className="main">

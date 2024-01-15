@@ -5,17 +5,25 @@ import { history } from 'umi';
 import { getList } from '@/api/home';
 
 const List = () => {
+  // 在当前页面跳转之前记录滚动位置
   const [dataList, setDataList] = useState([])
   const getHomeList = async () => {
     try {
       let res: any = await getList()
       setDataList(res)
+      setTimeout(() => {
+        window.scrollTo({
+          top: JSON.parse(sessionStorage.getItem("scrollPosition")).top,
+          behavior: 'smooth',
+        });
+      }, 500)
     } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
+    // 在另一个组件中获取记录的操作信息
     getHomeList()
   }, [])
 
@@ -51,12 +59,14 @@ const List = () => {
           <img src={nodesInfo(item.content).img || ''} alt="" />
           <div className="item-title" onClick={() => {
             // 跳转到指定路由
-            history.push(`/info/${item.id}`);
+            sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
+            history.push(`/info/${item.id}`, { operation: 'someOperation' });
           }}>{item.title}</div>
           <div className="item-date">時間：{item.create_time}</div>
           <div className="item-decs">{`${nodesInfo(item.content).decs}...` || ''}</div>
           <span className="item-continue" onClick={() => {
             // 跳转到指定路由
+            sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
             history.push(`/info/${item.id}`);
           }}>Continue Reading</span>
         </div>
