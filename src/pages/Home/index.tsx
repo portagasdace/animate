@@ -6,7 +6,13 @@ import { getList } from "@/api/home";
 
 import "./index.less"
 
+import Analytics from "@/utils/firebase"
+
 export default function HomePage() {
+  const {
+    analytics,
+    logEvent
+  } = Analytics
   const [id, setId] = useState('')
   const [recentList, setRecentList] = useState([])
   const [hotList, setHotList] = useState([])
@@ -40,8 +46,10 @@ export default function HomePage() {
   }
 
   useEffect(() => {
+    console.log(analytics, logEvent,"======")
+    logEvent(analytics, 'home_review');
     getHomeList()
-    
+
   }, [])
   return (
     <div className="main">
@@ -78,6 +86,10 @@ export default function HomePage() {
                 recentList.map((item: any, key) => {
                   return <div key={`${key}_div`} onClick={
                     () => {
+                      logEvent(analytics, 'info_review',{
+                        title:item.title
+                      });
+
                       // 跳转到指定路由
                       window.location.href = `/info/${item.id}`
                     }}>{item.title}</div>
@@ -92,6 +104,9 @@ export default function HomePage() {
                 return <div key={`${key}_div`} onClick={
                   () => {
                     // 跳转到指定路由
+                    logEvent(analytics, 'info_review',{
+                      title:item.title
+                    });
                     window.location.href = `/info/${item.id}`
                   }}>{item.title}</div>
               })

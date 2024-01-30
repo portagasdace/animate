@@ -3,8 +3,13 @@ import { useEffect, useState } from "react";
 import { history } from 'umi';
 
 import { getList } from '@/api/home';
+import Analytics from "@/utils/firebase"
 
 const List = () => {
+  const {
+    analytics,
+    logEvent
+  } = Analytics
   // 在当前页面跳转之前记录滚动位置
   const [dataList, setDataList] = useState([])
   const getHomeList = async () => {
@@ -13,7 +18,7 @@ const List = () => {
       setDataList(res)
       setTimeout(() => {
         window.scrollTo({
-          top: JSON.parse(sessionStorage.getItem("scrollPosition")).top,
+          top: JSON.parse(sessionStorage.getItem("scrollPosition"))?.top || 0,
           behavior: 'smooth',
         });
       }, 500)
@@ -60,6 +65,9 @@ const List = () => {
           <div className="item-title" onClick={() => {
             // 跳转到指定路由
             sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
+            logEvent(analytics, 'info_review',{
+              title:item.title
+            });
             history.push(`/info/${item.id}`, { operation: 'someOperation' });
           }}>{item.title}</div>
           <div className="item-date">時間：{item.create_time}</div>
@@ -67,6 +75,9 @@ const List = () => {
           <span className="item-continue" onClick={() => {
             // 跳转到指定路由
             sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
+            logEvent(analytics, 'info_review',{
+              title:item.title
+            });
             history.push(`/info/${item.id}`);
           }}>Continue Reading</span>
         </div>
