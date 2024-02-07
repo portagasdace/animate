@@ -42,9 +42,7 @@ const List = () => {
     const firstImageUrl = firstImage ? firstImage.getAttribute('data-src') : null;
 
     // 选择所有需要的标签
-    const headings = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6'));
     const paragraphs = Array.from(doc.querySelectorAll('p'));
-    const spans = Array.from(doc.querySelectorAll('span'));
 
     // 获取标签内容并截取前 30 个字符
     const getContentAndTruncate = (element: any) => {
@@ -52,8 +50,24 @@ const List = () => {
     };
     const paragraphContents = paragraphs.map(getContentAndTruncate).join('').slice(0, 100);
     // 截取前 30 个字符
+
+    let imgUrl = ''
+
+    const regex = /<img.*?src=\"(.*?)\".*?>/g; // 匹配所有 img 标签中的 src 属性值
+    const srcArray = []; // 存放所有图片连接的数组
+
+    let match;
+    while ((match = regex.exec(serverHtml)) !== null) {
+      srcArray.push(match[1]); // 将匹配到的图片连接放入数组中
+    }
+    if (srcArray.length > 2) {
+      imgUrl = srcArray[2]
+    } else {
+      imgUrl = srcArray.length ? srcArray[1] : ""
+
+    }
     return {
-      img: firstImageUrl,
+      img: imgUrl,
       decs: paragraphContents
     } as any
   }
@@ -65,8 +79,8 @@ const List = () => {
           <div className="item-title" onClick={() => {
             // 跳转到指定路由
             sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
-            logEvent(analytics, 'info_review',{
-              title:item.title
+            logEvent(analytics, 'info_review', {
+              title: item.title
             });
             history.push(`/info/${item.id}`, { operation: 'someOperation' });
           }}>{item.title}</div>
@@ -75,8 +89,8 @@ const List = () => {
           <span className="item-continue" onClick={() => {
             // 跳转到指定路由
             sessionStorage.setItem('scrollPosition', JSON.stringify({ top: window.scrollY }));
-            logEvent(analytics, 'info_review',{
-              title:item.title
+            logEvent(analytics, 'info_review', {
+              title: item.title
             });
             history.push(`/info/${item.id}`);
           }}>Continue Reading</span>
