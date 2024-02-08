@@ -39,7 +39,8 @@ const List = () => {
 
     // 获取第一张图片的链接
     const firstImage = doc.querySelector('img');
-    const firstImageUrl = firstImage ? firstImage.getAttribute('data-src') : null;
+    const firstImageUrl: any = firstImage ? firstImage.getAttribute('data-src') : null;
+    const firstImageSrc: any = firstImage ? firstImage.getAttribute('src') : null;
 
     // 选择所有需要的标签
     const paragraphs = Array.from(doc.querySelectorAll('p'));
@@ -49,7 +50,9 @@ const List = () => {
       return element ? element.textContent.trim() : '';
     };
     const paragraphContents = paragraphs.map(getContentAndTruncate).join('').slice(0, 100);
-    // 截取前 30 个字符
+
+
+    // 创建一个 DOM 解析器
 
     let imgUrl = ''
 
@@ -60,10 +63,11 @@ const List = () => {
     while ((match = regex.exec(serverHtml)) !== null) {
       srcArray.push(match[1]); // 将匹配到的图片连接放入数组中
     }
-    if (srcArray.length > 2) {
-      imgUrl = srcArray[2]
+    if (srcArray.length > 1) {
+      imgUrl = srcArray[1]
     } else {
-      imgUrl = srcArray.length ? srcArray[1] : ""
+      console.log(srcArray, firstImageUrl, firstImageSrc,'firstImageSrc'); // 打印第一个 img 标签的 src 属性值
+      imgUrl = srcArray.length ? srcArray[0] : firstImageUrl === '' ? firstImageSrc : firstImageUrl
 
     }
     return {
