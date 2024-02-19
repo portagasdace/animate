@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { history, Outlet } from 'umi';
+import { history, Outlet, Helmet } from 'umi';
 
 import { getList } from "@/api/home";
 
@@ -46,13 +46,30 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    console.log(analytics, logEvent,"======")
+    console.log(analytics, logEvent, "======")
     logEvent(analytics, 'home_review');
     getHomeList()
 
   }, [])
   return (
     <div className="main">
+      <Helmet>
+        <title>《動漫時訊》</title>
+        <meta
+          name="description"
+          content="《動漫時訊》是一個專註於提供最新、最熱動漫資訊的平臺。"
+        />
+        <meta
+          name="keywords"
+          content="動漫資訊, 最新動漫, 動漫更新, 動漫劇情, 海賊王, 鎮魂街, 葬送的芙莉蓮, 不死不幸"
+        />
+        <meta property="og:title" content="動漫時訊" />
+        <meta
+          property="og:description"
+          content="《動漫時訊》是一個專註於提供最新、最熱動漫資訊的平臺。"
+        />
+        <meta property="og:image" content="https://anime.weilaiyw.com" />
+      </Helmet>
       <div className="head">
         <div className="head-content">
           <span onClick={() => {
@@ -86,8 +103,8 @@ export default function HomePage() {
                 recentList.map((item: any, key) => {
                   return <div key={`${key}_div`} onClick={
                     () => {
-                      logEvent(analytics, 'info_review',{
-                        title:item.title
+                      logEvent(analytics, 'info_review', {
+                        title: item.title
                       });
 
                       // 跳转到指定路由
@@ -104,8 +121,8 @@ export default function HomePage() {
                 return <div key={`${key}_div`} onClick={
                   () => {
                     // 跳转到指定路由
-                    logEvent(analytics, 'info_review',{
-                      title:item.title
+                    logEvent(analytics, 'info_review', {
+                      title: item.title
                     });
                     window.location.href = `/info/${item.id}`
                   }}>{item.title}</div>

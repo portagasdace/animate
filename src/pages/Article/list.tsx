@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { history } from 'umi';
+import { history, Helmet } from 'umi';
 
 import { getList } from '@/api/home';
 import Analytics from "@/utils/firebase"
@@ -66,7 +66,7 @@ const List = () => {
     if (srcArray.length > 1) {
       imgUrl = srcArray[1]
     } else {
-      console.log(srcArray, firstImageUrl, firstImageSrc,'firstImageSrc'); // 打印第一个 img 标签的 src 属性值
+      console.log(srcArray, firstImageUrl, firstImageSrc, 'firstImageSrc'); // 打印第一个 img 标签的 src 属性值
       imgUrl = srcArray.length ? srcArray[0] : firstImageUrl === '' ? firstImageSrc : firstImageUrl
 
     }
@@ -76,6 +76,23 @@ const List = () => {
     } as any
   }
   return <div className="article-list">
+    <Helmet>
+      <title>《動漫時訊》</title>
+      <meta
+        name="description"
+        content="《動漫時訊》是一個專註於提供最新、最熱動漫資訊的平臺。"
+      />
+      <meta
+        name="keywords"
+        content="動漫資訊, 最新動漫, 動漫更新, 動漫劇情, 海賊王, 鎮魂街, 葬送的芙莉蓮, 不死不幸"
+      />
+      <meta property="og:title" content="動漫時訊" />
+      <meta
+        property="og:description"
+        content="《動漫時訊》是一個專註於提供最新、最熱動漫資訊的平臺。"
+      />
+      <meta property="og:image" content="https://anime.weilaiyw.com" />
+    </Helmet>
     {
       dataList.map((item: any, key: any) => {
         return <div className="list-item" key={`${key}_index`}>
